@@ -6,24 +6,37 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>ユーザー一覧</h2>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>名前</th>
-            <th>メールアドレス</th>
-            <th>予約日</th>
-            <th>予約時間</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.date }}</td>
-            <td>{{ user.time }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-wrapper">
+        <h2>ユーザー一覧</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名前</th>
+                    <th>メールアドレス</th>
+                    <th>予約日</th>
+                    <th>予約時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users.items %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.date }}</td>
+                    <td>{{ user.time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- ページネーションのリンク -->
+        {% if users.has_prev %}
+        <a href="{{ url_for('users', page_num=users.prev_num) }}">前のページ</a>
+        {% endif %}
+        {% if users.has_next %}
+        <a href="{{ url_for('users', page_num=users.next_num) }}">次のページ</a>
+        {% endif %}
+    </div>
 </body>
 </html>
